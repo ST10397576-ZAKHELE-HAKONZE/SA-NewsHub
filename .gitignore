@@ -2,6 +2,7 @@
 .gradle
 /local.properties
 /.idea/caches
+/sahub-api
 /.idea/libraries
 /.idea/modules.xml
 /.idea/workspace.xml
