@@ -11,32 +11,45 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Create a vertical layout to hold both text and button
         val layout = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(48, 48, 48, 48) // left, top, right, bottom (in pixels)
+            setPadding(48, 48, 48, 48)
         }
 
-        // Welcome text
-        val textView = TextView(this).apply {
-            text = "Welcome to SA NewsHub!\n(Home Feed will show news here)"
-            textSize = 18f
-            setPadding(0, 0, 0, 32) // space below text
+        val welcomeText = TextView(this).apply {
+            text = "Welcome to SA NewsHub!"
+            textSize = 20f
+            textAlignment = TextView.TEXT_ALIGNMENT_CENTER
+            setPadding(0, 0, 0, 24)
         }
 
-        // Settings button
-        val button = Button(this).apply {
+        // Mock News List
+        val newsItems = listOf(
+            "Load shedding Stage 4 announced for tonight",
+            "Heavy rain expected in Gauteng tomorrow",
+            "New job portal launched for youth graduates"
+        )
+
+        for (item in newsItems) {
+            val newsItem = TextView(this).apply {
+                text = "• $item"
+                textSize = 16f
+                setPadding(0, 8, 0, 8)
+            }
+            layout.addView(newsItem)
+        }
+
+        val settingsButton = Button(this).apply {
             text = "Go to Settings"
             setOnClickListener {
                 startActivity(Intent(this@HomeActivity, SettingsActivity::class.java))
             }
+            setPadding(0, 16, 0, 16)
         }
 
-        // Add views to layout
-        layout.addView(textView)
-        layout.addView(button)
+        layout.addView(welcomeText)
+        layout.addView(settingsButton)
 
-        // Set the layout as content
         setContentView(layout)
     }
 }

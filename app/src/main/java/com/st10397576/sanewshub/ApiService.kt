@@ -7,7 +7,9 @@ data class NewsItem(
     val id: Int,
     val title: String,
     val body: String,
-    val timestamp: String
+    val category: String,
+    val timestamp: String,
+    val source: String
 )
 
 data class AuthRequest(val email: String, val password: String)

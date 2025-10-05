@@ -1,14 +1,14 @@
 package com.st10397576.sanewshub
 
 import android.os.Bundle
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import com.google.android.material.switchmaterial.SwitchMaterial
 
 class SettingsActivity : AppCompatActivity() {
 
-    private lateinit var darkModeSwitch: SwitchMaterial
+    private lateinit var darkModeSwitch: Switch
     private lateinit var regionSpinner: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +38,9 @@ class SettingsActivity : AppCompatActivity() {
         if (selectedIndex >= 0) regionSpinner.setSelection(selectedIndex)
 
         darkModeSwitch.setOnCheckedChangeListener { _, isChecked ->
-            prefs.edit { putBoolean("dark_mode", isChecked) }
+            prefs.edit()
+                .putBoolean("dark_mode", isChecked)
+                .apply()
             if (isChecked) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             } else {
@@ -49,10 +51,14 @@ class SettingsActivity : AppCompatActivity() {
         regionSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 val selected = regions[position]
-                prefs.edit { putString("region", selected) }
+                prefs.edit()
+                    .putString("region", selected)
+                    .apply()
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {}
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Required
+            }
         }
     }
 }
