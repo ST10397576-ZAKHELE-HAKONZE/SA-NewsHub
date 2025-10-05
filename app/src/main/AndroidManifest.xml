@@ -33,6 +33,10 @@
             android:name="com.st10397576.sanewshub.HomeActivity"
             android:exported="false" />
 
+        <activity
+            android:name="com.st10397576.sanewshub.SettingsActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
