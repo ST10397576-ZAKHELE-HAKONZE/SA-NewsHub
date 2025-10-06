@@ -14,9 +14,9 @@ A mobile news application built for South Africans to stay informed about load s
 
 ## 🎥 Demo Video
 
-[![Watch the Demo](https://img.youtube.com/vi/your-video-id/0.jpg)](https://youtu.be/your-video-id)
+[![Watch the Demo](https://img.youtube.com/vi/your-video-id/0.jpg)](https://youtu.be/Coa74ugiHNE)
 
-> 🔗 **[Click here to watch the full demo video (unlisted)](https://youtu.be/your-video-id)**  
+> 🔗 **[Click here to watch the full demo video (unlisted)](https://youtu.be/Coa74ugiHNE)**  
 > Includes voice-over walkthrough of:  
 > - User registration & login  
 > - Settings customization (dark mode, region)  
