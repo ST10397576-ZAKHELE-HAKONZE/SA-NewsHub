@@ -147,7 +147,7 @@ SA-NewsHub/
 ```
 
 ## 🤖 AI Tool Usage Disclosure
-This project utilized AI assistance (Qwen) for:
+This project utilized AI assistance for:
 
 - Debugging Gradle build errors and runtime crashes
 - Research on MongoDB IP whitelisting, Retrofit, SharedPreferences, RecyclerView and Render.com deployment
