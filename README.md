@@ -1,6 +1,6 @@
 # 🇿🇦 SA NewsHub - South African News Application
 
-![SA NewsHub Icon](https://github.com/ST10397576-ZAKHELE-HAKONZE/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.webp?raw=true)
+![SA NewsHub Icon](https://github.com/ST10397576-ZAKHELE-HAKONZE/SA-NewsHub/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp)
 
 **Student:** Zakhele Hakonze  
 **Student Number:** ST10397576  
