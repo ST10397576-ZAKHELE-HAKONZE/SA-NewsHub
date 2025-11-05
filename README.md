@@ -75,27 +75,27 @@ SA NewsHub is a comprehensive Android news application tailored for South Africa
 ### Authentication & Onboarding
 <table>
   <tr>
-    <td><img src="screenshots/login.png" width="250"/><br/><b>Login Screen</b></td>
-    <td><img src="screenshots/register.png" width="250"/><br/><b>Registration</b></td>
-    <td><img src="screenshots/google_sso.png" width="250"/><br/><b>Google SSO</b></td>
+    <td><img src="screenshots/login.jpg" width="250"/><br/><b>Login Screen</b></td>
+    <td><img src="screenshots/register.jpg" width="250"/><br/><b>Registration</b></td>
+    <td><img src="screenshots/google_sso.jpg" width="250"/><br/><b>Google SSO</b></td>
   </tr>
 </table>
 
 ### Home & News Feed
 <table>
   <tr>
-    <td><img src="screenshots/home_light.png" width="250"/><br/><b>Home (Light Mode)</b></td>
-    <td><img src="screenshots/home_dark.png" width="250"/><br/><b>Home (Dark Mode)</b></td>
-    <td><img src="screenshots/news_list.png" width="250"/><br/><b>News List</b></td>
+    <td><img src="screenshots/home_light.jpg" width="250"/><br/><b>Home (Light Mode)</b></td>
+    <td><img src="screenshots/home_dark.jpg" width="250"/><br/><b>Home (Dark Mode)</b></td>
+    <td><img src="screenshots/news_list.jpg" width="250"/><br/><b>News List</b></td>
   </tr>
 </table>
 
 ### Multi-Language Support
 <table>
   <tr>
-    <td><img src="screenshots/english.png" width="250"/><br/><b>English</b></td>
-    <td><img src="screenshots/afrikaans.png" width="250"/><br/><b>Afrikaans</b></td>
-    <td><img src="screenshots/zulu.png" width="250"/><br/><b>isiZulu</b></td>
+    <td><img src="screenshots/english.jpg" width="250"/><br/><b>English</b></td>
+    <td><img src="screenshots/afrikaans.jpg" width="250"/><br/><b>Afrikaans</b></td>
+    <td><img src="screenshots/zulu.jpg" width="250"/><br/><b>isiZulu</b></td>
   </tr>
 </table>
 
