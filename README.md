@@ -202,7 +202,7 @@ dependencies {
 SA-NewsHub/
 ├── .github/
 │   └── workflows/
-│       └── android.yml          # GitHub Actions CI/CD
+│       └── android.yml          
 ├── app/
 │   ├── src/
 │   │   ├── main/
@@ -237,7 +237,7 @@ SA-NewsHub/
 ├── server/
 │   ├── server.js
 │   └── package.json
-├── screenshots/                  # Feature screenshots
+├── screenshots/                  
 ├── README.md
 ├── RELEASE_NOTES.md
 └── AI_USAGE.md
@@ -543,7 +543,7 @@ Using AI tools enhanced my understanding of:
 ##  Release Information
 
 **Current Version:** v1.0.0 (Final POE Part 3)  
-**Release Date:** November 5, 2025  
+**Release Date:** November 6, 2025  
 **Tag:** `Final-POE-Part3`
 
 See [RELEASE_NOTES.md](RELEASE_NOTES.md) for detailed version history.
@@ -633,6 +633,3 @@ This project is submitted as part of academic coursework for OPSC6312 at IIE Ros
 ---
 
 **Built with ❤️ for South Africa 🇿🇦**
-```
-
----
