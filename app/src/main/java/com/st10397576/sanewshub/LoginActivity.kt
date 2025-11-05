@@ -86,7 +86,7 @@ class LoginActivity : AppCompatActivity() {
 
         Log.d(TAG, "LoginActivity created")
 
-        // ✅ Initialize default theme to light mode on first launch
+        //Initialize default theme to light mode on first launch
         val prefs = getSharedPreferences("AppSettings", MODE_PRIVATE)
         if (!prefs.contains("dark_mode")) {
             // First launch - set default to light mode

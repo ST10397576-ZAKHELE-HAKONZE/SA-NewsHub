@@ -1,27 +1,20 @@
 package com.st10397576.sanewshub
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.st10397576.sanewshub.database.NewsEntity
 import com.st10397576.sanewshub.repository.NewsRepository
 import kotlinx.coroutines.launch
-import androidx.core.app.ActivityCompat
-import com.google.firebase.messaging.FirebaseMessaging
 import android.content.Context
 import android.content.res.Configuration
 import java.util.*
