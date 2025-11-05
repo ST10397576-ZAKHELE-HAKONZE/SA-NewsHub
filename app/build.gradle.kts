@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -66,4 +68,45 @@ dependencies {
 
     // SharedPreferences KTX
     implementation(libs.androidx.preference.ktx)
+
+    // ============ NEW DEPENDENCIES BELOW ============
+
+    // Room Database
+    val room_version = "2.6.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+
+    // Lifecycle components
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+
+    // RecyclerView (if not already added)
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+
+    // WorkManager for background sync
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+
+    // AppCompat for Toolbar
+    implementation("androidx.appcompat:appcompat:1.6.1")
+
+    // ============ FIREBASE DEPENDENCIES (NEW) ============
+
+    // Firebase BOM (Bill of Materials) - manages versions
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+
+    // Firebase Authentication (ADD THIS - MISSING!)
+    implementation("com.google.firebase:firebase-auth-ktx")
+
+    // Firebase Cloud Messaging
+    implementation("com.google.firebase:firebase-messaging-ktx")
+
+    // Firebase Analytics (optional but recommended)
+    implementation("com.google.firebase:firebase-analytics-ktx")
+
+    // Google Sign-In
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
+
+
+
 }

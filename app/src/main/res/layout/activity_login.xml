@@ -36,6 +36,31 @@
         android:layout_height="wrap_content"
         android:text="Login"/>
 
+    <!-- ADD THIS SECTION -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#CCCCCC"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OR"
+        android:layout_marginBottom="16dp"
+        android:textSize="14sp"/>
+
+    <Button
+        android:id="@+id/buttonGoogleSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign in with Google"
+        android:drawableLeft="@drawable/ic_google"
+        android:drawablePadding="8dp"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+    <!-- END OF NEW SECTION -->
+
     <TextView
         android:id="@+id/textViewRegister"
         android:layout_width="wrap_content"

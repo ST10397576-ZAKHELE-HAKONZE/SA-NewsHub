@@ -1,122 +1,235 @@
 package com.st10397576.sanewshub
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.appcompat.app.AppCompatDelegate
 import android.os.Bundle
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.st10397576.sanewshub.database.NewsEntity
+import com.st10397576.sanewshub.repository.NewsRepository
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import androidx.core.app.ActivityCompat
+import com.google.firebase.messaging.FirebaseMessaging
+import android.content.Context
+import android.content.res.Configuration
+import java.util.*
 
 /**
  * HomeActivity serves as the main landing page of the SA NewsHub app.
- * It dynamically loads and displays news articles retrieved from the API.
- * The activity is built programmatically (without XML layout) using a LinearLayout as the root view.
+ * It displays news articles using RecyclerView and supports offline mode.
+ *
+ * Features:
+ * - Fetches news from API when online
+ * - Displays cached news when offline
+ * - Automatic refresh on app start
+ * - Pull-to-refresh functionality (can be added with SwipeRefreshLayout)
+ *
+ * Reference: Android Offline-First Architecture
+ * https://developer.android.com/topic/architecture/data-layer
  */
 class HomeActivity : AppCompatActivity() {
-    // Root layout for the activity; all UI components will be added here programmatically
-    private lateinit var rootLayout: LinearLayout
+
+    private val TAG = "HomeActivity"
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var toolbar: Toolbar
+    private lateinit var newsRepository: NewsRepository
+    private lateinit var newsAdapter: NewsAdapter
+
+    override fun attachBaseContext(newBase: Context) {
+        val prefs = newBase.getSharedPreferences("AppSettings", Context.MODE_PRIVATE)
+        val languageCode = prefs.getString("language", "en") ?: "en"
+
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+
+        val config = Configuration(newBase.resources.configuration)
+        config.setLocale(locale)
+
+        super.attachBaseContext(newBase.createConfigurationContext(config))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_home)
 
-        // Initialize a vertical LinearLayout to hold all the UI components
-        rootLayout = LinearLayout(this).apply {
-            id = R.id.home_root
-            orientation = LinearLayout.VERTICAL
-            setPadding(48, 48, 48, 48)
+        Log.d(TAG, "HomeActivity created")
+
+        // Apply saved theme
+        val prefs = getSharedPreferences("AppSettings", MODE_PRIVATE)
+        if (!prefs.contains("dark_mode")) {
+            prefs.edit().putBoolean("dark_mode", false).apply()
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        } else {
+            val isDarkMode = prefs.getBoolean("dark_mode", false)
+            AppCompatDelegate.setDefaultNightMode(
+                if (isDarkMode) AppCompatDelegate.MODE_NIGHT_YES
+                else AppCompatDelegate.MODE_NIGHT_NO
+            )
         }
 
-        // The layout will be populated dynamically, so we set it as the main content view
-        setContentView(rootLayout)
-        // Fetch and display news articles from the API
-        fetchNews()
+        // Initialize views
+        toolbar = findViewById(R.id.toolbar)
+        recyclerView = findViewById(R.id.recyclerView)
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = getString(R.string.home_title)
+
+        newsRepository = NewsRepository(this)
+
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        newsAdapter = NewsAdapter(emptyList())
+        recyclerView.adapter = newsAdapter
+
+        newsRepository.allNews.observe(this) { articles ->
+            Log.d(TAG, "News data updated: ${articles.size} articles")
+            updateUI(articles)
+        }
+
+        newsRepository.isLoading.observe(this) { isLoading ->
+            if (isLoading) {
+                Log.d(TAG, "Loading news...")
+            } else {
+                Log.d(TAG, "Finished loading")
+            }
+        }
+
+        newsRepository.errorMessage.observe(this) { error ->
+            error?.let {
+                Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+                Log.e(TAG, "Error: $it")
+            }
+        }
+
+        // Only auto-fetch on first open (not on recreate)
+        if (savedInstanceState == null) {
+            refreshNews(showSuccessToast = false) // Auto-fetch without toast
+        }
     }
 
     /**
-     * Displays an error message on the screen when news loading fails.
-     * Also re-adds a "Go to Settings" button for navigation.
+     * Creates the options menu in the toolbar.
+     * Adds Settings and Refresh menu items.
      */
-    private fun showError(message: String) {
-        // Clear previous content except welcome & button
-        rootLayout.removeAllViews()
-
-        // Create a TextView to show the error message in red
-        val errorText = TextView(this).apply {
-            text = message
-            textSize = 16f
-            setTextColor(getColor(android.R.color.holo_red_dark))
-            setPadding(0, 8, 0, 8)
-        }
-
-        rootLayout.addView(errorText)
-
-        // Add a button allowing users to navigate to Settings
-        rootLayout.addView(Button(this).apply {
-            text = "Go to Settings"
-            setOnClickListener {
-                startActivity(Intent(this@HomeActivity, SettingsActivity::class.java))
-            }
-        })
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_home, menu)
+        return true
     }
 
     /**
-     * Fetches news articles from the backend API asynchronously using Kotlin coroutines.
-     * Updates the UI based on the success or failure of the network request.
+     * Handles menu item clicks.
      */
-    private fun fetchNews() {
-        // Launch a coroutine on a background thread for network operations
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                // Perform the API request to fetch news articles
-                val response = ApiHelper.apiService.getNews()
-                // Switch back to the main thread to update the UI
-                withContext(Dispatchers.Main) {
-                    rootLayout.removeAllViews() // Clear loading
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+                true
+            }
+            R.id.action_refresh -> {
+                // Manual refresh WILL show toast
+                refreshNews(showSuccessToast = true)
+                true
+            }
+            R.id.action_clear_cache -> {
+                clearCache()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
-                    // Add a welcome title at the top
-                    val welcome = TextView(this@HomeActivity).apply {
-                        text = "Welcome to SA NewsHub!"
-                        textSize = 20f
-                        textAlignment = TextView.TEXT_ALIGNMENT_CENTER
-                        setPadding(0, 0, 0, 24)
-                    }
-                    rootLayout.addView(welcome)
+    /**
+     * Refreshes news from the API.
+     * If offline, will display cached data automatically via LiveData.
+     */
+    private fun refreshNews(showSuccessToast: Boolean = true) {
+        Log.d(TAG, "Refreshing news...")
 
-                    // If the request is successful and contains news data
-                    if (response.isSuccessful && response.body() != null) {
-                        // Iterate through each news item and display its title
-                        for (item in response.body()!!) {
-                            val newsItem = TextView(this@HomeActivity).apply {
-                                text = "• ${item.title}"
-                                textSize = 16f
-                                setPadding(0, 8, 0, 8)
-                            }
-                            rootLayout.addView(newsItem)
-                        }
-                    } else {
-                        // Show an error message if the response fails or is empty
-                        showError("Failed to load news")
-                    }
+        lifecycleScope.launch {
+            val success = newsRepository.refreshNews()
 
-                    // Re-add the "Go to Settings" button at the bottom of the screen
-                    rootLayout.addView(Button(this@HomeActivity).apply {
-                        text = "Go to Settings"
-                        setOnClickListener {
-                            startActivity(Intent(this@HomeActivity, SettingsActivity::class.java))
-                        }
-                        setPadding(0, 16, 0, 16)
-                    })
+            if (success) {
+                // Only show toast if requested
+                if (showSuccessToast) {
+                    Toast.makeText(
+                        this@HomeActivity,
+                        getString(R.string.news_updated),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-            } catch (e: Exception) {
-                // Handle any network or unexpected exceptions
-                withContext(Dispatchers.Main) {
-                    showError("Network error: ${e.message}")
+                Log.d(TAG, "News refreshed successfully")
+            } else {
+                val hasCached = newsRepository.hasCachedData()
+                if (hasCached) {
+                    Toast.makeText(
+                        this@HomeActivity,
+                        getString(R.string.showing_cached),
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        this@HomeActivity,
+                        getString(R.string.no_cache),
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }
+    }
+
+    /**
+     * Clears all cached articles from the database.
+     */
+    private fun clearCache() {
+        lifecycleScope.launch {
+            newsRepository.clearCache()
+            Toast.makeText(
+                this@HomeActivity,
+                "Cache cleared",
+                Toast.LENGTH_SHORT
+            ).show()
+            Log.d(TAG, "Cache cleared by user")
+        }
+    }
+
+    /**
+     * Updates the RecyclerView with new data.
+     *
+     * @param articles List of news articles to display
+     */
+    private fun updateUI(articles: List<NewsEntity>) {
+        if (articles.isEmpty()) {
+            Log.d(TAG, "No articles to display")
+            // You can show an empty state view here
+        } else {
+            Log.d(TAG, "Displaying ${articles.size} articles")
+        }
+
+        // Convert NewsEntity to NewsItem for the adapter
+        val newsItems = articles.map { entity ->
+            NewsItem(
+                id = entity.id,
+                title = entity.title,
+                body = entity.body,
+                category = entity.category,
+                timestamp = entity.timestamp,
+                source = entity.source
+            )
+        }
+
+        // Update adapter with new data
+        newsAdapter = NewsAdapter(newsItems)
+        recyclerView.adapter = newsAdapter
     }
 }

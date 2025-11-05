@@ -1,98 +1,226 @@
 package com.st10397576.sanewshub
 
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 
 /**
- * LoginActivity handles user authentication.
- * It allows users to log into the SA NewsHub app using their email and password.
- * On successful login, users are redirected to the Home screen.
+ * LoginActivity with Firebase Authentication and Google SSO.
  */
 class LoginActivity : AppCompatActivity() {
-    // Declare UI components
+
+    companion object {
+        private const val TAG = "LoginActivity"
+    }
+
+    // UI components
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
-    private lateinit var registerTextView: androidx.appcompat.widget.AppCompatTextView
+    private lateinit var googleSignInButton: Button
+    private lateinit var registerTextView: TextView
+
+    // Firebase and Google Sign-In
+    private lateinit var auth: FirebaseAuth
+    private lateinit var googleSignInHelper: GoogleSignInHelper
+
+    // Activity result launcher for Google Sign-In
+    private val googleSignInLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        Log.d(TAG, "Google Sign-In result received")
+        googleSignInHelper.handleSignInResult(
+            data = result.data,
+            onSuccess = { account ->
+                //  Using string resource with format
+                Toast.makeText(
+                    this,
+                    getString(R.string.welcome_user, account.displayName),
+                    Toast.LENGTH_SHORT
+                ).show()
+                navigateToHome()
+            },
+            onFailure = { exception ->
+                Log.e(TAG, "Google Sign-In failed", exception)
+                // Using string resource with format
+                Toast.makeText(
+                    this,
+                    getString(R.string.google_signin_failed, exception.message),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        )
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        val prefs = newBase.getSharedPreferences("AppSettings", Context.MODE_PRIVATE)
+        val languageCode = prefs.getString("language", "en") ?: "en"
+
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+
+        val config = Configuration(newBase.resources.configuration)
+        config.setLocale(locale)
+
+        super.attachBaseContext(newBase.createConfigurationContext(config))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // Initialize UI components by finding their corresponding views in the layout
+        Log.d(TAG, "LoginActivity created")
+
+        // ✅ Initialize default theme to light mode on first launch
+        val prefs = getSharedPreferences("AppSettings", MODE_PRIVATE)
+        if (!prefs.contains("dark_mode")) {
+            // First launch - set default to light mode
+            prefs.edit().putBoolean("dark_mode", false).apply()
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        } else {
+            // Apply saved theme
+            val isDarkMode = prefs.getBoolean("dark_mode", false)
+            AppCompatDelegate.setDefaultNightMode(
+                if (isDarkMode) AppCompatDelegate.MODE_NIGHT_YES
+                else AppCompatDelegate.MODE_NIGHT_NO
+            )
+        }
+
+        // Initialize Firebase Auth
+        auth = FirebaseAuth.getInstance()
+        googleSignInHelper = GoogleSignInHelper(this)
+
+        // Check if user is already logged in
+        if (auth.currentUser != null) {
+            Log.d(TAG, "User already logged in")
+            navigateToHome()
+            return
+        }
+
+        // Initialize UI components
         emailEditText = findViewById(R.id.editTextEmail)
         passwordEditText = findViewById(R.id.editTextPassword)
         loginButton = findViewById(R.id.buttonLogin)
+        googleSignInButton = findViewById(R.id.buttonGoogleSignIn)
         registerTextView = findViewById(R.id.textViewRegister)
 
-        // -------------------------------
-        // LOGIN BUTTON CLICK HANDLER
-        // -------------------------------
+        // Email/Password Login
         loginButton.setOnClickListener {
-            // Retrieve text from the input fields
             val email = emailEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
 
-            // Validate user input before sending request
             if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+                // Already using string resource - GOOD!
+                Toast.makeText(this, getString(R.string.fill_all_fields), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            // If validation passes, attempt to log in
+
             loginUser(email, password)
         }
 
-        // -------------------------------
-        // REGISTER LINK CLICK HANDLER
-        // -------------------------------
+        // Google Sign-In
+        googleSignInButton.setOnClickListener {
+            Log.d(TAG, "Google Sign-In button clicked")
+            val signInIntent = googleSignInHelper.googleSignInClient.signInIntent
+            googleSignInLauncher.launch(signInIntent)
+        }
+
+        // Navigate to Register
         registerTextView.setOnClickListener {
-            // Navigate to RegisterActivity when user clicks "Register"
             startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 
     /**
-     * Handles user login by sending the credentials to the API.
-     * Uses coroutines to perform the network call on a background thread.
-     *
-     * @param email The user's email address
-     * @param password The user's password
+     * Handles email/password login.
+     * Sends plain password to server for verification.
      */
     private fun loginUser(email: String, password: String) {
-        // Launch a coroutine on the IO thread (for network operations)
+        Log.d(TAG, "Attempting login for: $email")
+        loginButton.isEnabled = false
+
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                // Send login request to API via Retrofit
+                // Send plain password - server will compare with hash
                 val response = ApiHelper.apiService.login(
                     AuthRequest(email, password)
                 )
-                // Switch to Main thread to update UI safely
+
                 withContext(Dispatchers.Main) {
                     if (response.isSuccessful) {
-                        // If login is successful, notify user and navigate to HomeActivity
-                        Toast.makeText(this@LoginActivity, "Login successful!", Toast.LENGTH_SHORT).show()
-                        // Navigate to Home
-                        startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
-                        finish()// Close LoginActivity so user can’t go back to it
+                        Log.d(TAG, " API login successful")
+
+                        // Also sign in with Firebase
+                        auth.signInWithEmailAndPassword(email, password)
+                            .addOnSuccessListener {
+                                Log.d(TAG, " Firebase login successful")
+                                //  Using string resource
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    getString(R.string.login_success),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                navigateToHome()
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w(TAG, "Firebase login failed: ${e.message}")
+                                // API login succeeded, that's enough
+                                // Using string resource
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    getString(R.string.login_success),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                navigateToHome()
+                            }
                     } else {
-                        // If login fails (e.g., wrong credentials), show error
-                        Toast.makeText(this@LoginActivity, "Invalid credentials", Toast.LENGTH_SHORT).show()
+                        val errorBody = response.errorBody()?.string()
+                        Log.e(TAG, "Login failed: ${response.code()} - $errorBody")
+
+                        loginButton.isEnabled = true
+                        // Using string resource
+                        Toast.makeText(
+                            this@LoginActivity,
+                            getString(R.string.login_failed),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             } catch (e: Exception) {
-                // Handle possible exceptions (e.g., network failure, timeout)
+                Log.e(TAG, "Network error", e)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@LoginActivity, "Network error: ${e.message}", Toast.LENGTH_LONG).show()
+                    loginButton.isEnabled = true
+                    //  Using string resource with format
+                    Toast.makeText(
+                        this@LoginActivity,
+                        getString(R.string.network_error, e.message),
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }
+    }
+
+    /**
+     * Navigate to HomeActivity and clear back stack
+     */
+    private fun navigateToHome() {
+        startActivity(Intent(this, HomeActivity::class.java))
+        finish()
     }
 }

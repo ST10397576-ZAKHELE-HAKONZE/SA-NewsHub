@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SA Nuussentrum</string>
+
+    <!-- Login Screen -->
+    <string name="login_title">SA Nuussentrum</string>
+    <string name="email_hint">E-pos</string>
+    <string name="password_hint">Wagwoord</string>
+    <string name="login_button">Meld aan</string>
+    <string name="google_signin">Meld aan met Google</string>
+    <string name="or_text">OF</string>
+    <string name="register_link">Het jy nie \'n rekening nie? Registreer</string>
+
+    <!-- Register Screen -->
+    <string name="register_title">Registreer</string>
+    <string name="register_button">Registreer</string>
+
+    <string name="email_exists">E-pos bestaan reeds</string>
+    <string name="registration_failed">Registrasie misluk</string>
+    <string name="password_length">Wagwoord moet ten minste 6 karakters wees</string>
+
+    <!-- Home Screen -->
+    <string name="home_title">SA Nuussentrum</string>
+    <string name="menu_settings">Instellings</string>
+    <string name="menu_refresh">Verfris</string>
+    <string name="menu_clear_cache">Maak kas skoon</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Instellings</string>
+    <string name="dark_mode">Donker modus</string>
+    <string name="region">Streek</string>
+    <string name="language">Taal</string>
+
+    <!-- News Categories -->
+    <string name="category_politics">POLITIEK</string>
+    <string name="category_sports">SPORT</string>
+    <string name="category_business">BESIGHEID</string>
+    <string name="category_entertainment">VERMAAK</string>
+
+    <!-- Messages -->
+    <string name="login_success">Aanmelding suksesvol!</string>
+    <string name="login_failed">Ongeldige geloofsbriewe</string>
+    <string name="register_success">Registrasie suksesvol!</string>
+    <string name="network_error">Netwerk fout: %s</string>
+    <string name="fill_all_fields">Vul asseblief alle velde in</string>
+    <string name="news_updated">Nuus suksesvol opgedateer</string>
+    <string name="showing_cached">Wys gestoorde artikels (vanlyn modus)</string>
+    <string name="no_cache">Geen internet en geen gestoorde artikels beskikbaar nie</string>
+    <string name="cache_cleared">Kas skoongemaak</string>
+    <string name="welcome_user">Welkom %s!</string>
+    <string name="google_signin_failed">Google Aanmelding misluk: %s</string>
+
+    <!-- Regions -->
+    <string-array name="regions">
+        <item>Gauteng</item>
+        <item>Wes-Kaap</item>
+        <item>KwaZulu-Natal</item>
+        <item>Oos-Kaap</item>
+        <item>Limpopo</item>
+        <item>Mpumalanga</item>
+        <item>Noordwes</item>
+        <item>Vrystaat</item>
+        <item>Noord-Kaap</item>
+    </string-array>
+
+    <!-- Time formats -->
+    <string name="hours_ago">%d ure gelede</string>
+    <string name="just_now">Sopas</string>
+    <string name="source_via">via %s</string>
+</resources>

@@ -19,7 +19,8 @@ data class NewsItem(
 data class AuthRequest(val email: String, val password: String)
 // Represents a generic response from the API (used for register/login responses)
 data class ApiResponse(val message: String, val email: String? = null)
-
+// Request body for registering FCM token
+data class FcmTokenRequest(val email: String, val fcmToken: String)
 
 // ---------------------------
 // API Service Interface

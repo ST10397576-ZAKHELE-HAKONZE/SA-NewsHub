@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">I-SA NewsHub</string>
+
+    <!-- Login Screen -->
+    <string name="login_title">I-SA NewsHub</string>
+    <string name="email_hint">I-imeyili</string>
+    <string name="password_hint">Iphasiwedi</string>
+    <string name="login_button">Ngena ngemvume</string>
+    <string name="google_signin">Ngena ngemvume nge-Google</string>
+    <string name="or_text">NOMA</string>
+    <string name="register_link">Awunayo i-akhawunti? Bhalisa</string>
+
+    <!-- Register Screen -->
+    <string name="register_title">Bhalisa</string>
+    <string name="register_button">Bhalisa</string>
+
+    <string name="email_exists">I-imeyili ikhona kakade</string>
+    <string name="registration_failed">Ukubhalisa kuhlulekile</string>
+    <string name="password_length">Iphasiwedi kufanele ibe okungenani izinhlamvu ezi-6</string>
+
+    <!-- Home Screen -->
+    <string name="home_title">I-SA NewsHub</string>
+    <string name="menu_settings">Izilungiselelo</string>
+    <string name="menu_refresh">Vuselela</string>
+    <string name="menu_clear_cache">Sula i-cache</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Izilungiselelo</string>
+    <string name="dark_mode">Imodi emnyama</string>
+    <string name="region">Isifunda</string>
+    <string name="language">Ulimi</string>
+
+    <!-- News Categories -->
+    <string name="category_politics">EZEPOLITIKI</string>
+    <string name="category_sports">EZEMIDLALO</string>
+    <string name="category_business">EZAMABHIZINISI</string>
+    <string name="category_entertainment">EZOKUZIJABULISA</string>
+
+    <!-- Messages -->
+    <string name="login_success">Ukungena ngemvume kuphumelele!</string>
+    <string name="login_failed">Imininingwane engalungile</string>
+    <string name="register_success">Ukubhalisa kuphumelele!</string>
+    <string name="network_error">Iphutha lenethiwekhi: %s</string>
+    <string name="fill_all_fields">Sicela ugcwalise zonke izinkambu</string>
+    <string name="news_updated">Izindaba zibuyekezwe ngempumelelo</string>
+    <string name="showing_cached">Kubonisa izindatshana ezigciniwe (imodi ye-offline)</string>
+    <string name="no_cache">Ayikho i-inthanethi futhi azikho izindatshana ezigciniwe ezitholakalayo</string>
+    <string name="cache_cleared">I-cache isusiwe</string>
+    <string name="welcome_user">Siyakwamukela %s!</string>
+    <string name="google_signin_failed">Ukungena nge-Google kuhlulekile: %s</string>
+
+    <!-- Regions -->
+    <string-array name="regions">
+        <item>Gauteng</item>
+        <item>Western Cape</item>
+        <item>KwaZulu-Natal</item>
+        <item>Eastern Cape</item>
+        <item>Limpopo</item>
+        <item>Mpumalanga</item>
+        <item>North West</item>
+        <item>Free State</item>
+        <item>Northern Cape</item>
+    </string-array>
+
+    <!-- Time formats -->
+    <string name="hours_ago">%d amahora edlule</string>
+    <string name="just_now">Manje nje</string>
+    <string name="source_via">nge %s</string>
+</resources>

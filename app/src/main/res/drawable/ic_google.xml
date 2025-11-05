@@ -1,0 +1,19 @@
+<!-- res/drawable/ic_google.xml -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#4285F4"
+        android:pathData="M12,5c1.62,0 3.06,0.56 4.21,1.64l3.15,-3.15C17.45,1.09 14.97,0 12,0C7.31,0 3.25,2.62 1.36,6.36l3.66,2.84C6.09,6.35 8.85,5 12,5z"/>
+    <path
+        android:fillColor="#34A853"
+        android:pathData="M23.64,12.18c0,-0.87 -0.08,-1.53 -0.25,-2.18H12v4.51h6.44c-0.28,1.48 -1.11,2.73 -2.38,3.58l3.66,2.84c2.14,-1.97 3.37,-4.87 3.37,-8.25z"/>
+    <path
+        android:fillColor="#FBBC05"
+        android:pathData="M5.02,14.2c-0.29,-0.87 -0.46,-1.8 -0.46,-2.75s0.17,-1.88 0.46,-2.75L1.36,6.36C0.49,8.09 0,10 0,12s0.49,3.91 1.36,5.64l3.66,-2.84z"/>
+    <path
+        android:fillColor="#EA4335"
+        android:pathData="M12,24c2.97,0 5.46,-0.98 7.28,-2.66l-3.66,-2.84c-0.98,0.66 -2.23,1.06 -3.62,1.06 -3.15,0 -5.91,-1.95 -6.98,-4.66L1.36,17.64C3.25,21.38 7.31,24 12,24z"/>
+</vector>

@@ -1,83 +1,154 @@
 package com.st10397576.sanewshub
 
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 
 /**
- * RegisterActivity handles user registration for the SA NewsHub app.
- * It allows new users to create an account by providing an email and password.
- * The registration request is sent to the backend API using Retrofit and Kotlin coroutines.
+ * RegisterActivity handles user registration.
  */
 class RegisterActivity : AppCompatActivity() {
 
-    // Declare UI components
+    companion object {
+        private const val TAG = "RegisterActivity"
+    }
+
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var registerButton: Button
+    private lateinit var auth: FirebaseAuth
+
+    override fun attachBaseContext(newBase: Context) {
+        val prefs = newBase.getSharedPreferences("AppSettings", Context.MODE_PRIVATE)
+        val languageCode = prefs.getString("language", "en") ?: "en"
+        val locale = Locale.forLanguageTag(languageCode)
+        Locale.setDefault(locale)
+        val config = Configuration(newBase.resources.configuration)
+        config.setLocale(locale)
+        super.attachBaseContext(newBase.createConfigurationContext(config))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        // Initialize UI elements by connecting them to their IDs in the XML layout
+        Log.d(TAG, "RegisterActivity created")
+        auth = FirebaseAuth.getInstance()
+
         emailEditText = findViewById(R.id.editTextEmail)
         passwordEditText = findViewById(R.id.editTextPassword)
         registerButton = findViewById(R.id.buttonRegister)
 
-        // -------------------------------
-        // REGISTER BUTTON CLICK HANDLER
-        // -------------------------------
         registerButton.setOnClickListener {
-            // Retrieve text from input fields and remove any extra spaces
             val email = emailEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
-            // Validate that both fields are filled in before proceeding
+
             if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+                // Using string resource
+                Toast.makeText(
+                    this,
+                    getString(R.string.fill_all_fields),
+                    Toast.LENGTH_SHORT
+                ).show()
                 return@setOnClickListener
             }
-            // If validation passes, call function to register the user
+
+            if (password.length < 6) {
+                // Using string resource
+                Toast.makeText(
+                    this,
+                    getString(R.string.password_length),
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
             registerUser(email, password)
         }
     }
 
     /**
-     * Sends a registration request to the backend API using Retrofit.
-     * Executes the network call asynchronously using Kotlin coroutines.
-     *
-     * @param email The user's email address
-     * @param password The user's chosen password
+     * Registers user with backend API.
+     * Sends plain password - server will hash it.
      */
     private fun registerUser(email: String, password: String) {
-        // Launch a coroutine on a background (IO) thread for the network operation
+        Log.d(TAG, "Starting registration for: $email")
+        registerButton.isEnabled = false
+
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                // Call the register endpoint defined in ApiService
+                // Send plain password - server will hash it
                 val response = ApiHelper.apiService.register(
                     AuthRequest(email, password)
                 )
-                // Switch to the main thread to update the UI
+
                 withContext(Dispatchers.Main) {
                     if (response.isSuccessful) {
-                        // If registration is successful, show a success message
-                        Toast.makeText(this@RegisterActivity, "Registration successful!", Toast.LENGTH_SHORT).show()
-                        finish() // Go back to Login
+                        Log.d(TAG, "API registration successful")
+
+                        // Also register with Firebase
+                        auth.createUserWithEmailAndPassword(email, password)
+                            .addOnSuccessListener {
+                                Log.d(TAG, "Firebase registration successful")
+                                // Using string resource
+                                Toast.makeText(
+                                    this@RegisterActivity,
+                                    getString(R.string.register_success),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                finish()
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w(TAG, "Firebase registration failed: ${e.message}")
+                                // Using string resource
+                                Toast.makeText(
+                                    this@RegisterActivity,
+                                    getString(R.string.register_success),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                finish()
+                            }
                     } else {
-                        // If registration fails (e.g., email already exists), show error message
-                        Toast.makeText(this@RegisterActivity, "Email already exists", Toast.LENGTH_SHORT).show()
+                        val errorBody = response.errorBody()?.string()
+                        Log.e(TAG, "Registration failed: ${response.code()} - $errorBody")
+
+                        registerButton.isEnabled = true
+
+                        // Using string resource (need to add this one!)
+                        val errorMessage = if (errorBody?.contains("already exists") == true) {
+                            getString(R.string.email_exists)
+                        } else {
+                            getString(R.string.registration_failed)
+                        }
+
+                        Toast.makeText(
+                            this@RegisterActivity,
+                            errorMessage,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             } catch (e: Exception) {
-                // Handle network errors or exceptions gracefully
+                Log.e(TAG, "Network error", e)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@RegisterActivity, "Network error: ${e.message}", Toast.LENGTH_LONG).show()
+                    registerButton.isEnabled = true
+                    // Using string resource with format
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        getString(R.string.network_error, e.message),
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }

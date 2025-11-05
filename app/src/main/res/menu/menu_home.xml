@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Refresh button to manually fetch latest news -->
+    <item
+        android:id="@+id/action_refresh"
+        android:icon="@android:drawable/ic_popup_sync"
+        android:title="Refresh"
+        app:showAsAction="ifRoom" />
+
+    <!-- Settings navigation -->
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="Settings"
+        app:showAsAction="ifRoom" />
+
+    <!-- Clear cache option -->
+    <item
+        android:id="@+id/action_clear_cache"
+        android:title="Clear Cache"
+        app:showAsAction="never" />
+
+</menu>
