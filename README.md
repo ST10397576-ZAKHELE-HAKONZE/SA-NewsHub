@@ -1,6 +1,6 @@
 # 🇿🇦 SA NewsHub - South African News Application
 
-![SA NewsHub Icon](https://github.com/ST10397576-ZAKHELE-HAKONZE/SA-NewsHub/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png?raw=true)
+![SA NewsHub Icon](https://github.com/ST10397576-ZAKHELE-HAKONZE/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.webp?raw=true)
 
 **Student:** Zakhele Hakonze  
 **Student Number:** ST10397576  
@@ -120,7 +120,7 @@ SA NewsHub is a comprehensive Android news application tailored for South Africa
 <table>
   <tr>
     <td><img src="screenshots/app_icon.png" width="250"/><br/><b>Custom SA Icon</b></td>
-    <td><img src="screenshots/home_screen.png" width="250"/><br/><b>On Device</b></td>
+    <td><img src="screenshots/home_screen.jpg" width="250"/><br/><b>On Device</b></td>
   </tr>
 </table>
 
