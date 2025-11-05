@@ -1,14 +1,55 @@
-# 📰 SA NewsHub – Part 2 Prototype
+# 🇿🇦 SA NewsHub - South African News Application
 
-[![Build Status](https://github.com/ST10397576-ZAKHELE-HAKONZE/SA-NewsHub/actions/workflows/build.yml/badge.svg)](https://github.com/ST10397576-ZAKHELE-HAKONZE/SA-NewsHub/actions)
+![SA NewsHub Icon](https://github.com/ST10397576-ZAKHELE-HAKONZE/SA-NewsHub/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png?raw=true)
 
-**Your Local News, Anytime, Anywhere.**  
-A mobile news application built for South Africans to stay informed about load shedding, weather alerts, job opportunities, and community updates — even in low-connectivity areas.
+**Student:** Zakhele Hakonze  
+**Student Number:** ST10397576  
+**Module:** OPSC6312 - Mobile Application Development  
+**Institution:** IIE Rosebank College  
+**Submission:** Part 3 - Final POE
 
-> 🔹 **Part 2 Submission** – OPSC6312 Portfolio of Evidence  
-> 🔹 **Due Date**: 7 October 2025  
-> 🔹 **Student**: Zakhele Hakonze (ST1039756)  
-> 🔹 **Institution**: Rosebank College
+---
+
+[![Build Status](https://github.com/ST10397576-ZAKHELE-HAKONZE/SA-NewsHub/actions/workflows/android.yml/badge.svg)](https://github.com/ST10397576-ZAKHELE-HAKONZE/SA-NewsHub/actions)
+
+##  About SA NewsHub 
+
+SA NewsHub is a comprehensive Android news application tailored for South African users, delivering personalized local and national news with multi-language support and offline capabilities. Built for South Africans to stay informed about load shedding, weather alerts, job opportunities, and community updates — even in low-connectivity areas.
+
+###  Key Features
+
+- ** Secure Authentication**
+  - Email/Password registration and login with BCrypt encryption
+  - Google Single Sign-On (SSO) integration
+  - Firebase Authentication backend
+
+- ** Multi-Language Support**
+  - English
+  - Afrikaans
+  - isiZulu
+  - Seamless language switching across entire app
+
+- ** News Management**
+  - Real-time news updates via REST API
+  - Offline reading with local database (Room)
+  - Background synchronization (WorkManager)
+  - Region-specific news filtering (All Provinces)
+
+- ** Push Notifications**
+  - Firebase Cloud Messaging (FCM)
+  - Breaking news alerts
+  - Real-time updates
+
+- ** User Settings**
+  - Dark/Light theme toggle
+  - Language preferences
+  - Regional news selection
+  - Persistent settings across sessions
+
+- ** Offline-First Architecture**
+  - Local caching with Room Database
+  - Automatic background sync
+  - Works without internet connection
 
 ---
 
@@ -16,124 +57,248 @@ A mobile news application built for South Africans to stay informed about load s
 
 [![Watch the Demo](https://img.youtube.com/vi/your-video-id/0.jpg)](https://youtu.be/Coa74ugiHNE)
 
-> 🔗 **[Click here to watch the full demo video (unlisted)](https://youtu.be/Coa74ugiHNE)**  
-> Includes voice-over walkthrough of:  
-> - User registration & login  
-> - Settings customization (dark mode, region)  
-> - Real-time news fetching from custom API  
-> - Backend data in MongoDB Atlas & Render.com logs
+> 📹 **[Click here to watch the full demo video (unlisted)](https://youtu.be/Coa74ugiHNE)**  
 
-*(Replace `your-video-id` with your actual YouTube video ID)*
-
----
-
-## ✅ Part 2 Features Implemented
-
-This prototype fulfills **all mandatory Part 2 requirements** as per the POE brief:
-
-| Feature | Status | Details |
-|--------|--------|--------|
-| **User Registration & Login** | ✅ | Email/password auth with **password encryption** via `bcrypt` on backend |
-| **Custom REST API** | ✅ | Built with **Node.js + Express**, hosted on **Render.com**, connected to **MongoDB Atlas** |
-| **Settings Screen** | ✅ | Users can toggle **dark mode** and select **region** (saved via `SharedPreferences`) |
-| **News Feed** | ✅ | Displays real news from `/api/news` endpoint |
-| **GitHub Actions** | ✅ | Automated build & test pipeline |
-| **Google SSO** | ❌ | *Marked “POE only” – deferred to Final POE* |
-| **Offline Mode / FCM / Multi-language** | ❌ | *POE-only features – not required for Part 2* |
+*Video includes:*
+- Complete app navigation
+- Authentication flows (Email/Password & Google SSO)
+- Multi-language switching demonstration
+- Dark mode toggle
+- Push notification testing
+- Offline mode demonstration
+- All Part 3 requirements
 
 ---
 
-## 🛠️ How It Works
+##  Screenshots
 
-### 🔐 Authentication Flow
-1. **Register**:  
-   - User enters email & password on `RegisterActivity`
-   - App sends `POST /api/register` to backend
-   - Backend **hashes password** using `bcrypt` and stores user in **MongoDB Atlas**
+### Authentication & Onboarding
+<table>
+  <tr>
+    <td><img src="screenshots/login.png" width="250"/><br/><b>Login Screen</b></td>
+    <td><img src="screenshots/register.png" width="250"/><br/><b>Registration</b></td>
+    <td><img src="screenshots/google_sso.png" width="250"/><br/><b>Google SSO</b></td>
+  </tr>
+</table>
 
-2. **Login**:  
-   - User enters credentials on `LoginActivity`
-   - App sends `POST /api/login`
-   - Backend compares hashed password → returns success/failure
-   - On success, navigates to `HomeActivity`
+### Home & News Feed
+<table>
+  <tr>
+    <td><img src="screenshots/home_light.png" width="250"/><br/><b>Home (Light Mode)</b></td>
+    <td><img src="screenshots/home_dark.png" width="250"/><br/><b>Home (Dark Mode)</b></td>
+    <td><img src="screenshots/news_list.png" width="250"/><br/><b>News List</b></td>
+  </tr>
+</table>
 
-> 🔒 **No passwords are stored or transmitted in plain text.**
+### Multi-Language Support
+<table>
+  <tr>
+    <td><img src="screenshots/english.png" width="250"/><br/><b>English</b></td>
+    <td><img src="screenshots/afrikaans.png" width="250"/><br/><b>Afrikaans</b></td>
+    <td><img src="screenshots/zulu.png" width="250"/><br/><b>isiZulu</b></td>
+  </tr>
+</table>
 
-### 🌐 API Integration
-- **Backend**: `https://sahub-api.onrender.com`
-- **Endpoints**:
-  - `GET /api/news` → Returns mock South African news (load shedding, weather, jobs)
-  - `POST /api/register` → Creates new user
-  - `POST /api/login` → Validates credentials
-- **Tech Stack**: Node.js, Express, MongoDB Atlas, Render.com
-- **Security**: MongoDB IP whitelist includes `0.0.0.0/0` for Render.com compatibility
+### Settings & Notifications
+<table>
+  <tr>
+    <td><img src="screenshots/settings.png" width="250"/><br/><b>Settings Screen</b></td>
+    <td><img src="screenshots/notification.png" width="250"/><br/><b>Push Notification</b></td>
+    <td><img src="screenshots/firebase_fcm.png" width="250"/><br/><b>Firebase Console</b></td>
+  </tr>
+</table>
 
-### 📰 News Feed
-- `HomeActivity` calls `ApiHelper.apiService.getNews()` on launch
-- Uses **Retrofit + Coroutines** to fetch data off main thread
-- Displays news titles in a clean vertical list
-- Shows “Loading…” during fetch, handles errors gracefully
+### GitHub Actions CI/CD
+<table>
+  <tr>
+    <td><img src="screenshots/github_actions_overview.png" width="400"/><br/><b>Actions Overview</b></td>
+    <td><img src="screenshots/github_actions_success.png" width="400"/><br/><b>Successful Build</b></td>
+  </tr>
+</table>
 
-### ⚙️ Settings
-- **Dark Mode**: Toggles `AppCompatDelegate` night mode
-- **Region**: Dropdown with provinces (Gauteng, WC, KZN, etc.)
-- Both settings persist via `SharedPreferences` and survive app restart
+### App Icon & Branding
+<table>
+  <tr>
+    <td><img src="screenshots/app_icon.png" width="250"/><br/><b>Custom SA Icon</b></td>
+    <td><img src="screenshots/home_screen.png" width="250"/><br/><b>On Device</b></td>
+  </tr>
+</table>
+
+*All screenshots taken on Samsung Galaxy A26 running Android 16*
 
 ---
 
-## 📂 Project Structure
-```bash
-SA-NewsHub/
-├── app/
-│ ├── src/main/java/com/st10397576/sanewshub/
-│ │ ├── LoginActivity.kt # Email/password login
-│ │ ├── RegisterActivity.kt # User registration
-│ │ ├── HomeActivity.kt # News feed (API-connected)
-│ │ ├── SettingsActivity.kt # Dark mode + region
-│ │ ├── ApiService.kt # Retrofit interface
-│ │ └── ApiHelper.kt # Singleton API client
-│ └── res/
-│ ├── layout/
-│ │ ├── activity_login.xml
-│ │ ├── activity_register.xml
-│ │ ├── activity_settings.xml
-│ │ └── ...
-│ └── values/colors.xml # Includes purple_500
-├── build.gradle # Includes Retrofit, Coroutines, KTX
-└── README.md
+##  Technical Architecture
+
+### **Frontend (Android App)**
+- **Language:** Kotlin 1.9.0
+- **UI Framework:** Material Design 3, XML layouts
+- **Architecture Pattern:** MVVM (Model-View-ViewModel)
+- **Min SDK:** 24 (Android 7.0 Nougat)
+- **Target SDK:** 34 (Android 14)
+- **Build System:** Gradle with Kotlin DSL
+
+### **Backend (REST API)**
+- **Runtime:** Node.js 18+
+- **Framework:** Express.js 4.18
+- **Database:** 
+  - Production: MongoDB Atlas (Cloud)
+  - Development: SQLite (Local)
+- **Authentication:** BCrypt for password hashing
+- **Hosting:** Render.com (Free Tier)
+- **API Base URL:** `https://sahub-api.onrender.com`
+
+### **Cloud Services**
+- **Firebase Authentication:** User management
+- **Firebase Cloud Messaging:** Push notifications
+- **Google Sign-In:** OAuth 2.0 integration
+- **GitHub Actions:** CI/CD pipeline
+- **MongoDB Atlas:** Cloud database hosting
+
+### **Key Libraries & Versions**
+```gradle
+dependencies {
+    // Core Android
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    
+    // Firebase
+    implementation platform('com.google.firebase:firebase-bom:32.7.0')
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+    
+    // Google Sign-In
+    implementation 'com.google.android.gms:play-services-auth:20.7.0'
+    
+    // Room Database
+    implementation 'androidx.room:room-runtime:2.6.1'
+    implementation 'androidx.room:room-ktx:2.6.1'
+    kapt 'androidx.room:room-compiler:2.6.1'
+    
+    // Networking
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+    
+    // WorkManager
+    implementation 'androidx.work:work-runtime-ktx:2.9.0'
+    
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
+    
+    // Lifecycle
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.7.0'
+}
 ```
+
 ---
 
-## 🚀 Setup & Run
+##  Project Structure
+```
+SA-NewsHub/
+├── .github/
+│   └── workflows/
+│       └── android.yml          # GitHub Actions CI/CD
+├── app/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/com/st10397576/sanewshub/
+│   │   │   │   ├── LoginActivity.kt
+│   │   │   │   ├── RegisterActivity.kt
+│   │   │   │   ├── HomeActivity.kt
+│   │   │   │   ├── SettingsActivity.kt
+│   │   │   │   ├── MyFirebaseMessagingService.kt
+│   │   │   │   ├── GoogleSignInHelper.kt
+│   │   │   │   ├── database/
+│   │   │   │   │   ├── NewsDatabase.kt
+│   │   │   │   │   ├── NewsDao.kt
+│   │   │   │   │   └── NewsEntity.kt
+│   │   │   │   ├── repository/
+│   │   │   │   │   └── NewsRepository.kt
+│   │   │   │   ├── api/
+│   │   │   │   │   ├── ApiHelper.kt
+│   │   │   │   │   └── ApiService.kt
+│   │   │   │   └── worker/
+│   │   │   │       └── NewsSyncWorker.kt
+│   │   │   ├── res/
+│   │   │   │   ├── values/
+│   │   │   │   │   └── strings.xml
+│   │   │   │   ├── values-af/
+│   │   │   │   │   └── strings.xml
+│   │   │   │   └── values-zu/
+│   │   │   │       └── strings.xml
+│   │   │   └── AndroidManifest.xml
+│   │   └── google-services.json
+│   └── build.gradle.kts
+├── server/
+│   ├── server.js
+│   └── package.json
+├── screenshots/                  # Feature screenshots
+├── README.md
+├── RELEASE_NOTES.md
+└── AI_USAGE.md
+```
 
-### Prerequisites
-- Android Studio (Jellyfish or later)
+---
+
+##  Setup & Run
+
+### **Prerequisites**
+- Android Studio (Hedgehog | 2023.1.1 or later)
+- JDK 17
 - Physical Android device (min SDK 24 / Android 7.0)
 - Internet connection
 
-### Steps
-1. Clone this repo:
-   ```bash
+### **Steps**
+
+1. **Clone Repository:**
+```bash
    git clone https://github.com/ST10397576-ZAKHELE-HAKONZE/SA-NewsHub.git
-   ```
-   - Open in Android Studio
-   - Sync Gradle dependencies
-   - Run on a physical device
-   - Test:
+   cd SA-NewsHub
+```
+
+2. **Open in Android Studio:**
+   - Launch Android Studio
+   - File → Open → Select SA-NewsHub folder
+   - Wait for Gradle sync to complete
+
+3. **Firebase Setup:**
+   - Create Firebase project at [console.firebase.google.com](https://console.firebase.google.com)
+   - Add Android app with package name: `com.st10397576.sanewshub`
+   - Download `google-services.json`
+   - Place in `app/` directory
+   - Enable Authentication (Email/Password & Google)
+   - Enable Cloud Messaging
+
+4. **Build & Run:**
+   - Connect Android device or start emulator
+   - Click **Run** (▶️) button
+   - Select target device
+
+5. **Test Features:**
    - Register a new account
-   - Log in
+   - Log in with credentials
+   - Try Google SSO
    - View news feed
-   - Change settings
+   - Change language and theme in settings
+   - Test push notifications
+
 ---
-## ☁️ Backend Architecture
+
+##  Backend Architecture
+
 | **Component** | **Technology**                | **URL / Details**                                                |
 | ------------- | ----------------------------- | ---------------------------------------------------------------- |
 | **API**       | Node.js + Express             | [https://sahub-api.onrender.com](https://sahub-api.onrender.com) |
 | **Database**  | MongoDB Atlas (Free Tier)     | Cloud-hosted cluster                                             |
 | **Hosting**   | Render.com (Free Web Service) | Auto-deploys from GitHub                                         |
 
-### Sample API Response (GET /api/news):
-```bash
+### **Sample API Response (GET /api/news):**
+```json
 [
   {
     "id": 1,
@@ -146,8 +311,328 @@ SA-NewsHub/
 ]
 ```
 
-## 🤖 AI Tool Usage Disclosure
-This project utilized AI assistance for:
+### **API Endpoints:**
+- `GET /api/news` → Returns news articles
+- `POST /api/register` → Creates new user
+- `POST /api/login` → Validates credentials
 
-- Debugging Gradle build errors and runtime crashes
-- Research on MongoDB IP whitelisting, Retrofit, SharedPreferences, RecyclerView and Render.com deployment
+---
+
+##  Testing
+
+### **Manual Testing**
+-  Registration with valid/invalid inputs
+-  Login with email/password
+-  Google SSO flow
+-  Language switching (EN, AF, ZU)
+-  Dark mode toggle
+-  Offline mode (airplane mode)
+-  Push notification reception
+-  Background sync
+
+### **Automated Testing (GitHub Actions)**
+
+[![Android CI](https://github.com/ST10397576-ZAKHELE-HAKONZE/SA-NewsHub/actions/workflows/android.yml/badge.svg)](https://github.com/ST10397576-ZAKHELE-HAKONZE/SA-NewsHub/actions)
+
+CI/CD pipeline runs on every push:
+-  Build verification
+-  Unit tests
+-  APK generation
+-  Artifact upload
+
+---
+
+##  Part 3 Requirements Checklist
+
+### **Mandatory Features**
+- [x] **Authentication System**
+  - [x] Email/Password registration and login
+  - [x] BCrypt password encryption on server
+  - [x] Google Single Sign-On (SSO)
+  - [x] Firebase Authentication integration
+
+- [x] **Multi-Language Support**
+  - [x] 3 languages implemented (English, Afrikaans, isiZulu)
+  - [x] All UI elements localized
+  - [x] Toast messages translated
+  - [x] Settings persist across sessions
+
+- [x] **Push Notifications**
+  - [x] Firebase Cloud Messaging configured
+  - [x] Notification service implemented
+  - [x] Test notifications sent successfully
+  - [x] Background notification handling
+
+- [x] **Offline Mode**
+  - [x] Room Database for local storage
+  - [x] WorkManager for background sync
+  - [x] Data persists without internet
+  - [x] Graceful offline handling
+
+- [x] **Settings Management**
+  - [x] Dark/Light theme toggle
+  - [x] Language selection
+  - [x] Regional preferences
+  - [x] SharedPreferences for persistence
+
+- [x] **REST API Integration**
+  - [x] Custom backend (Node.js + Express)
+  - [x] Retrofit for API calls
+  - [x] Coroutines for async operations
+  - [x] Error handling implemented
+
+- [x] **GitHub Actions CI/CD**
+  - [x] Automated build pipeline
+  - [x] Unit test execution
+  - [x] APK artifact generation
+  - [x] Successful workflow runs
+
+### **Documentation**
+- [x] Complete README.md with setup instructions
+- [x] RELEASE_NOTES.md with feature descriptions
+- [x] AI_USAGE.md documenting AI tool usage
+- [x] Code comments and logging throughout
+- [x] Screenshots of all features
+
+### **Submission Requirements**
+- [x] Complete Kotlin source code on public GitHub
+- [x] No zip files (all files in repository)
+- [x] Comments and references in code
+- [x] Logging statements for debugging
+- [x] README with video link
+- [x] Release notes with screenshots
+- [x] Signed APK generated
+- [x] Google Play Console screenshots
+- [x] AI usage documentation (<500 words)
+- [x] Video with voice-over uploaded to YouTube (unlisted)
+
+---
+
+##  Google Play Console - Publication Process
+
+### Step 1: Generate Signed APK
+<img src="screenshots/generate_signed_apk.png" width="600"/>
+
+**Process:**
+1. Build → Generate Signed Bundle/APK
+2. Select APK
+3. Create/Select Keystore
+4. Enter keystore credentials
+5. Select release build variant
+6. Generate APK
+
+### Step 2: Keystore Configuration
+<img src="screenshots/keystore_details.png" width="600"/>
+
+**Keystore Details:**
+- **Location:** `~/android-keystore/sanewshub-release.jks`
+- **Alias:** `sanewshub-key`
+- **Validity:** 25 years
+- **Algorithm:** RSA 2048-bit
+
+### Step 3: Google Play Console Setup
+<img src="screenshots/play_console_app_created.png" width="600"/>
+
+**Created:**
+- App name: SA NewsHub
+- Default language: English (South Africa)
+- App category: News & Magazines
+- Target audience: 13+
+
+### Step 4: Store Listing
+<img src="screenshots/play_console_store_listing.png" width="600"/>
+
+**Prepared:**
+- Short description (80 chars)
+- Full description (4000 chars)
+- App icon (512x512)
+- Feature graphic (1024x500)
+- Phone screenshots (2-8 images)
+
+### Step 5: Release Dashboard
+<img src="screenshots/play_console_dashboard.png" width="600"/>
+
+**Status:** Production release prepared  
+**Version Code:** 1  
+**Version Name:** 1.0.0  
+**APK Size:** 8.5 MB
+
+---
+
+##  AI Tool Usage Disclosure
+
+This project utilized AI assistance throughout development. Below is a comprehensive list of how AI tools were used:
+
+### **1. Code Generation & Implementation**
+- **Firebase Authentication Setup:** AI provided initial setup code for Firebase Auth and Google SSO integration
+- **Room Database Schema:** Generated DAO interfaces and Entity classes with proper annotations
+- **Retrofit API Interface:** Created service interface definitions and Gson converters
+- **WorkManager Implementation:** Background sync worker setup and scheduling
+
+**Example - Firebase Auth Code:**
+```kotlin
+// AI-assisted implementation of Google Sign-In
+auth.signInWithCredential(credential)
+    .addOnSuccessListener { result ->
+        Log.d(TAG, "Google Sign-In successful: ${result.user?.email}")
+        navigateToHome()
+    }
+    .addOnFailureListener { exception ->
+        Log.e(TAG, "Google Sign-In failed", exception)
+        Toast.makeText(this, "Sign-in failed: ${exception.message}", Toast.LENGTH_LONG).show()
+    }
+```
+
+### **2. Debugging Assistance**
+- **Gradle Build Errors:** Resolved dependency conflicts and version mismatches
+- **Locale Constructor Deprecation:** Fixed deprecated `Locale(String)` to `Locale.forLanguageTag()`
+- **WorkManager Not Triggering:** Debugged background sync issues
+- **Dark Mode Language Persistence:** Fixed language reset bug when toggling themes
+- **FCM Token Registration:** Troubleshot notification permission issues on Android 13+
+
+**Example Debug Session:**
+```
+Issue: "Unresolved reference: AppCompatDelegate"
+AI Solution: Add import 'androidx.appcompat.app.AppCompatDelegate'
+Result:  Resolved
+```
+
+### **3. Documentation Creation**
+- **README.md:** Structure, formatting, and content organization
+- **RELEASE_NOTES.md:** Feature descriptions and changelog format
+- **Code Comments:** Added comprehensive inline documentation
+- **API Documentation:** Endpoint descriptions and request/response examples
+
+### **4. Research & Best Practices**
+- **MongoDB IP Whitelisting:** Understanding Render.com network requirements
+- **Retrofit Configuration:** Best practices for OkHttp interceptors
+- **SharedPreferences Usage:** Secure storage of user preferences
+- **RecyclerView Optimization:** ViewHolder pattern and DiffUtil
+- **Material Design Guidelines:** Theme configuration and color schemes
+
+### **5. Image Generation**
+- **App Icon Design:** No AI-generated images used (icon created manually with SA flag)
+
+### **6. Testing Strategy**
+- **Unit Test Structure:** Provided test case templates
+- **GitHub Actions YAML:** CI/CD workflow configuration
+- **Manual Test Scenarios:** Comprehensive test checklist creation
+
+### **AI Tools Used:**
+- **Claude (Anthropic):** Primary development assistant
+- **ChatGPT (OpenAI):** Secondary research and debugging
+- **GitHub Copilot:** Code completion and suggestions
+
+### **Percentage Breakdown:**
+- **Code Written by Student:** ~75%
+- **AI-Assisted Code:** ~20%
+- **AI-Generated (Documentation):** ~5%
+
+### **Learning Outcomes:**
+Using AI tools enhanced my understanding of:
+- Kotlin coroutines and suspend functions
+- MVVM architecture patterns
+- Firebase service integration
+- REST API design principles
+- Android lifecycle management
+
+**All AI-generated code was reviewed, understood, and modified** to fit the specific requirements of this project.
+
+---
+
+##  Release Information
+
+**Current Version:** v1.0.0 (Final POE Part 3)  
+**Release Date:** November 5, 2025  
+**Tag:** `Final-POE-Part3`
+
+See [RELEASE_NOTES.md](RELEASE_NOTES.md) for detailed version history.
+
+---
+
+##  Security
+
+- **Password Encryption:** BCrypt with salt rounds on server-side
+- **Secure Communication:** HTTPS for all API calls
+- **Firebase Rules:** Configured for production security
+- **API Key Protection:** Stored in environment variables
+- **Token Management:** Secure OAuth 2.0 token handling
+
+---
+
+##  Known Issues
+
+- None currently reported
+
+---
+
+##  Contact & Support
+
+**Developer:** Zakhele Hakonze  
+**Email:** st10397576@vcconnect.edu.za  
+**GitHub:** [@ST10397576-ZAKHELE-HAKONZE](https://github.com/ST10397576-ZAKHELE-HAKONZE)  
+**Institution:** IIE Rosebank College
+
+---
+
+##  License
+
+This project is submitted as part of academic coursework for OPSC6312 at IIE Rosebank College.  
+© 2025 Zakhele Hakonze - All Rights Reserved
+
+---
+
+##  Acknowledgments
+
+- **IIE Rosebank College** - Education and support
+- **Lecturer:** Wellcome Zaranyika - Guidance and feedback
+- **Firebase** - Authentication and messaging services
+- **MongoDB Atlas** - Cloud database hosting
+- **Material Design** - UI/UX guidelines
+- **OpenAI Claude** - Development assistance and documentation
+
+---
+
+##  References
+
+### **Official Documentation**
+1. Android Developers. (2024). *Kotlin and Android*. https://developer.android.com/kotlin
+2. Firebase. (2024). *Firebase Authentication*. https://firebase.google.com/docs/auth
+3. Google. (2024). *Sign in with Google*. https://developers.google.com/identity
+4. Android Developers. (2024). *Room Persistence Library*. https://developer.android.com/training/data-storage/room
+5. Square. (2024). *Retrofit Documentation*. https://square.github.io/retrofit/
+
+### **Third-Party Libraries**
+6. OkHttp Contributors. (2024). *OkHttp*. https://square.github.io/okhttp/
+7. Google. (2024). *Gson*. https://github.com/google/gson
+8. Android Developers. (2024). *WorkManager*. https://developer.android.com/topic/libraries/architecture/workmanager
+
+### **Design Guidelines**
+9. Material Design. (2024). *Material Design 3*. https://m3.material.io/
+10. Android Developers. (2024). *App Architecture Guide*. https://developer.android.com/topic/architecture
+
+### **Deployment & Hosting**
+11. Render. (2024). *Render Documentation*. https://render.com/docs
+12. MongoDB. (2024). *MongoDB Atlas*. https://www.mongodb.com/atlas
+
+### **AI Tools**
+13. Anthropic. (2024). *Claude AI Assistant*. https://www.anthropic.com/claude
+14. OpenAI. (2024). *ChatGPT*. https://openai.com/chatgpt
+
+---
+
+##  Project Statistics
+
+- **Lines of Code:** ~3,500
+- **Activities:** 4 (Login, Register, Home, Settings)
+- **Languages Supported:** 3 (EN, AF, ZU)
+- **String Resources:** 150+
+- **Dependencies:** 25+
+- **Development Time:** 12 weeks
+
+---
+
+**Built with ❤️ for South Africa 🇿🇦**
+```
+
+---
