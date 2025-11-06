@@ -1,5 +1,9 @@
 package com.st10397576.sanewshub
 
+// Add these imports at the top (after existing imports)
+import com.google.firebase.auth.FirebaseAuth
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatDelegate
 import android.os.Bundle
@@ -138,6 +142,10 @@ class HomeActivity : AppCompatActivity() {
                 clearCache()
                 true
             }
+            R.id.action_logout -> {  // ✅ ADD THIS
+                logout()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -179,6 +187,29 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun logout() {
+        // Sign out from Firebase
+        FirebaseAuth.getInstance().signOut()
+
+        // Sign out from Google (if they used Google SSO)
+        val googleSignInClient = GoogleSignIn.getClient(
+            this,
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
+        )
+        googleSignInClient.signOut()
+
+        // Clear SharedPreferences (optional)
+        getSharedPreferences("AppSettings", MODE_PRIVATE).edit().clear().apply()
+
+        // Navigate back to Login
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
+
+        Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
     }
 
     /**

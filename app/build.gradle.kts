@@ -107,6 +107,9 @@ dependencies {
     // Google Sign-In
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 
+    implementation ("com.google.android.material:material:1.11.0")
+    implementation ("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
+
 
 
 }
