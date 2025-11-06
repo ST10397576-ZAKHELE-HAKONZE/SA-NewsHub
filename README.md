@@ -53,11 +53,11 @@ SA NewsHub is a comprehensive Android news application tailored for South Africa
 
 ---
 
-## 🎥 Demo Video
+##  Demo Video
 
 [![Watch the Demo](https://img.youtube.com/vi/your-video-id/0.jpg)](https://youtu.be/Coa74ugiHNE)
 
-> 📹 **[Click here to watch the full demo video (unlisted)](https://youtu.be/Coa74ugiHNE)**  
+>  **[Click here to watch the full demo video (unlisted)](https://youtu.be/Coa74ugiHNE)**  
 
 *Video includes:*
 - Complete app navigation
@@ -459,87 +459,6 @@ CI/CD pipeline runs on every push:
 
 ---
 
-##  AI Tool Usage Disclosure
-
-This project utilized AI assistance throughout development. Below is a comprehensive list of how AI tools were used:
-
-### **1. Code Generation & Implementation**
-- **Firebase Authentication Setup:** AI provided initial setup code for Firebase Auth and Google SSO integration
-- **Room Database Schema:** Generated DAO interfaces and Entity classes with proper annotations
-- **Retrofit API Interface:** Created service interface definitions and Gson converters
-- **WorkManager Implementation:** Background sync worker setup and scheduling
-
-**Example - Firebase Auth Code:**
-```kotlin
-// AI-assisted implementation of Google Sign-In
-auth.signInWithCredential(credential)
-    .addOnSuccessListener { result ->
-        Log.d(TAG, "Google Sign-In successful: ${result.user?.email}")
-        navigateToHome()
-    }
-    .addOnFailureListener { exception ->
-        Log.e(TAG, "Google Sign-In failed", exception)
-        Toast.makeText(this, "Sign-in failed: ${exception.message}", Toast.LENGTH_LONG).show()
-    }
-```
-
-### **2. Debugging Assistance**
-- **Gradle Build Errors:** Resolved dependency conflicts and version mismatches
-- **Locale Constructor Deprecation:** Fixed deprecated `Locale(String)` to `Locale.forLanguageTag()`
-- **WorkManager Not Triggering:** Debugged background sync issues
-- **Dark Mode Language Persistence:** Fixed language reset bug when toggling themes
-- **FCM Token Registration:** Troubleshot notification permission issues on Android 13+
-
-**Example Debug Session:**
-```
-Issue: "Unresolved reference: AppCompatDelegate"
-AI Solution: Add import 'androidx.appcompat.app.AppCompatDelegate'
-Result:  Resolved
-```
-
-### **3. Documentation Creation**
-- **README.md:** Structure, formatting, and content organization
-- **RELEASE_NOTES.md:** Feature descriptions and changelog format
-- **Code Comments:** Added comprehensive inline documentation
-- **API Documentation:** Endpoint descriptions and request/response examples
-
-### **4. Research & Best Practices**
-- **MongoDB IP Whitelisting:** Understanding Render.com network requirements
-- **Retrofit Configuration:** Best practices for OkHttp interceptors
-- **SharedPreferences Usage:** Secure storage of user preferences
-- **RecyclerView Optimization:** ViewHolder pattern and DiffUtil
-- **Material Design Guidelines:** Theme configuration and color schemes
-
-### **5. Image Generation**
-- **App Icon Design:** No AI-generated images used (icon created manually with SA flag)
-
-### **6. Testing Strategy**
-- **Unit Test Structure:** Provided test case templates
-- **GitHub Actions YAML:** CI/CD workflow configuration
-- **Manual Test Scenarios:** Comprehensive test checklist creation
-
-### **AI Tools Used:**
-- **Claude (Anthropic):** Primary development assistant
-- **ChatGPT (OpenAI):** Secondary research and debugging
-- **GitHub Copilot:** Code completion and suggestions
-
-### **Percentage Breakdown:**
-- **Code Written by Student:** ~75%
-- **AI-Assisted Code:** ~20%
-- **AI-Generated (Documentation):** ~5%
-
-### **Learning Outcomes:**
-Using AI tools enhanced my understanding of:
-- Kotlin coroutines and suspend functions
-- MVVM architecture patterns
-- Firebase service integration
-- REST API design principles
-- Android lifecycle management
-
-**All AI-generated code was reviewed, understood, and modified** to fit the specific requirements of this project.
-
----
-
 ##  Release Information
 
 **Current Version:** v1.0.0 (Final POE Part 3)  
@@ -626,7 +545,7 @@ This project is submitted as part of academic coursework for OPSC6312 at IIE Ros
 - **Lines of Code:** ~3,500
 - **Activities:** 4 (Login, Register, Home, Settings)
 - **Languages Supported:** 3 (EN, AF, ZU)
-- **String Resources:** 150+
+- **String Resources:** 50+
 - **Dependencies:** 25+
 - **Development Time:** 12 weeks
 
