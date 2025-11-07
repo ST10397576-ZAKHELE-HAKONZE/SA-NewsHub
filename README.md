@@ -99,7 +99,7 @@ private fun logout() {
     // 2. Sign out from Google (clears SSO session)
     googleSignInClient.signOut()
     
-    // 3. Clear local app settings (optional)
+    // 3. Clear sensitive user data (keep app preferences like language/theme)
     getSharedPreferences("AppSettings", MODE_PRIVATE).edit().clear().apply()
     
     // 4. Navigate to Login screen and clear back stack
@@ -126,9 +126,9 @@ private fun logout() {
 
 ##  Demo Video
 
-[![Watch the Demo](https://img.youtube.com/vi/your-video-id/0.jpg)](https://youtu.be/Coa74ugiHNE)
+[![Watch the Demo](https://www.youtube.com/shorts/Hx1J7jClncw)](https://www.youtube.com/shorts/Hx1J7jClncw)
 
->  **[Click here to watch the full demo video (unlisted)](https://youtu.be/Coa74ugiHNE)**  
+>  **[Click here to watch the full demo video (unlisted)](https://www.youtube.com/shorts/Hx1J7jClncw)**  
 
 *Video includes:*
 - Complete app navigation
@@ -510,42 +510,20 @@ CI/CD pipeline runs on every push:
 - **Algorithm:** RSA 2048-bit
 
 ### Step 3: Google Play Console Setup
-<img src="screenshots/play_console_app_created.png" width="600"/>
+<img src="screenshots/payment.png" width="600"/>
 
-**Created:**
-- App name: SA NewsHub
-- Default language: English (South Africa)
-- App category: News & Magazines
-- Target audience: 13+
 
-### Step 4: Store Listing
-<img src="screenshots/play_console_store_listing.png" width="600"/>
-
-**Prepared:**
-- Short description (80 chars)
-- Full description (4000 chars)
-- App icon (512x512)
-- Feature graphic (1024x500)
-- Phone screenshots (2-8 images)
-
-### Step 5: Release Dashboard
-<img src="screenshots/play_console_dashboard.png" width="600"/>
-
-**Status:** Production release prepared  
-**Version Code:** 1  
-**Version Name:** 1.0.0  
-**APK Size:** 8.5 MB
-
----
-
-##  Release Information
-
-**Current Version:** v1.0.0 (Final POE Part 3)  
-**Release Date:** November 6, 2025  
-**Tag:** `Final-POE-Part3`
-
-See [RELEASE_NOTES.md](RELEASE_NOTES.md) for detailed version history.
-
+**Status:** Unable to complete registration
+   
+   **Reason:** The Google Play Console requires a $25 USD registration fee paid via credit/debit card. As I do not have access to a payment method, I was unable to proceed past this screen.
+   
+   **Preparation Completed:**
+   -  Signed release APK generated
+   -  Store assets prepared (icon, feature graphic, screenshots)
+   -  Store listing text drafted
+   -  Privacy policy created
+   -  All materials ready for publication
+   
 ---
 
 ##  Security

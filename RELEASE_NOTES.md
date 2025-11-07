@@ -90,7 +90,7 @@ private fun logout() {
 <table>
   <tr>
     <td><img src="screenshots/login.jpg" width="300"/><br/><b>Enhanced Login Screen</b></td>
-    <td><img src="screenshots/google_sso.png" width="300"/><br/><b>Google SSO Integration</b></td>
+    <td><img src="screenshots/google_sso.jpg" width="300"/><br/><b>Google SSO Integration</b></td>
   </tr>
 </table>
 
@@ -563,6 +563,7 @@ jobs:
 - **Fix:** Implemented proper token refresh flow
 - **Status:**  Resolved
 
+
 ### Minor Fixes
 
 - Fixed string resource references for toast messages
@@ -711,7 +712,7 @@ implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
 
 Version 1.0.0 represents the complete transformation of SA NewsHub from a basic prototype to a production-ready application with enterprise-grade features including authentication, multi-language support, push notifications, and offline capabilities. All Part 3 requirements have been successfully implemented with comprehensive testing and documentation.
 
-The application is now ready for publication on the Google Play Store and demonstrates advanced Android development practices including MVVM architecture, coroutines, Room database, Firebase services, and CI/CD automation.
+The application is now ready for publication on the Google Play Store and demonstrates advanced Android development practices including MVVM architecture, coroutines, Room database, Firebase services, and CI/CD automation. However I was unable to upload it to google play store because of billing issues.
 
 ---
 
