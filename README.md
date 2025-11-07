@@ -154,8 +154,8 @@ private fun logout() {
 
 <table>
   <tr>
-    <td><img src="screenshots/logout_menu.png" width="300"/><br/><b>Logout Option in Menu</b></td>
-    <td><img src="screenshots/logout_success.png" width="300"/><br/><b>Returned to Login Screen</b></td>
+    <td><img src="screenshots/logout_menu.jpg" width="300"/><br/><b>Logout Option in Menu</b></td>
+    <td><img src="screenshots/logout_success.jpg" width="300"/><br/><b>Returned to Login Screen</b></td>
   </tr>
 </table>
 
