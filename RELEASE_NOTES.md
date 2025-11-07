@@ -73,8 +73,8 @@ private fun logout() {
 
 <table>
   <tr>
-    <td><img src="screenshots/logout_menu.png" width="300"/><br/><b>Logout Option in Menu</b></td>
-    <td><img src="screenshots/logout_success.png" width="300"/><br/><b>Returned to Login Screen</b></td>
+    <td><img src="screenshots/logout_menu.jpg" width="300"/><br/><b>Logout Option in Menu</b></td>
+    <td><img src="screenshots/logout_success.jpg" width="300"/><br/><b>Returned to Login Screen</b></td>
   </tr>
 </table>
 
@@ -89,7 +89,7 @@ private fun logout() {
 
 <table>
   <tr>
-    <td><img src="screenshots/login.png" width="300"/><br/><b>Enhanced Login Screen</b></td>
+    <td><img src="screenshots/login.jpg" width="300"/><br/><b>Enhanced Login Screen</b></td>
     <td><img src="screenshots/google_sso.png" width="300"/><br/><b>Google SSO Integration</b></td>
   </tr>
 </table>
@@ -146,9 +146,9 @@ class GoogleSignInHelper(private val activity: Activity) {
 
 <table>
   <tr>
-    <td><img src="screenshots/english.png" width="250"/><br/><b>English Interface</b></td>
-    <td><img src="screenshots/afrikaans.png" width="250"/><br/><b>Afrikaans Interface</b></td>
-    <td><img src="screenshots/zulu.png" width="250"/><br/><b>isiZulu Interface</b></td>
+    <td><img src="screenshots/english.jpg" width="250"/><br/><b>English Interface</b></td>
+    <td><img src="screenshots/afrikaans.jpg" width="250"/><br/><b>Afrikaans Interface</b></td>
+    <td><img src="screenshots/zulu.jpg" width="250"/><br/><b>isiZulu Interface</b></td>
   </tr>
 </table>
 
@@ -387,9 +387,9 @@ class NewsSyncWorker(context: Context, params: WorkerParameters)
 
 <table>
   <tr>
-    <td><img src="screenshots/settings.png" width="250"/><br/><b>Settings Screen</b></td>
-    <td><img src="screenshots/dark_mode.png" width="250"/><br/><b>Dark Mode</b></td>
-    <td><img src="screenshots/light_mode.png" width="250"/><br/><b>Light Mode</b></td>
+    <td><img src="screenshots/settings_m.jpg" width="250"/><br/><b>Settings Screen</b></td>
+    <td><img src="screenshots/dark_mode.jpg" width="250"/><br/><b>Dark Mode</b></td>
+    <td><img src="screenshots/light_mode.jpg" width="250"/><br/><b>Light Mode</b></td>
   </tr>
 </table>
 
@@ -439,7 +439,7 @@ darkModeSwitch.setOnCheckedChangeListener { _, isChecked ->
 <table>
   <tr>
     <td><img src="screenshots/app_icon.png" width="250"/><br/><b>App Icon Design</b></td>
-    <td><img src="screenshots/home_screen.png" width="250"/><br/><b>Icon on Device</b></td>
+    <td><img src="screenshots/home_screen.jpg" width="250"/><br/><b>Icon on Device</b></td>
   </tr>
 </table>
 

@@ -54,7 +54,7 @@ SA NewsHub is a comprehensive Android news application tailored for South Africa
 
 ---
 
-## 🔐 Authentication & Security
+##  Authentication & Security
 
 ### **User Authentication Flow**
 
@@ -117,10 +117,10 @@ private fun logout() {
 - User is signed out and returned to Login screen
 
 **Security Benefits:**
-- ✅ Clears Firebase authentication token
-- ✅ Removes Google SSO credentials
-- ✅ Prevents unauthorized access after logout
-- ✅ Clears back navigation stack (can't press back to return)
+-  Clears Firebase authentication token
+-  Removes Google SSO credentials
+-  Prevents unauthorized access after logout
+-  Clears back navigation stack (can't press back to return)
 
 ---
 
@@ -149,6 +149,13 @@ private fun logout() {
     <td><img src="screenshots/login.jpg" width="250"/><br/><b>Login Screen</b></td>
     <td><img src="screenshots/register.jpg" width="250"/><br/><b>Registration</b></td>
     <td><img src="screenshots/google_sso.jpg" width="250"/><br/><b>Google SSO</b></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td><img src="screenshots/logout_menu.png" width="300"/><br/><b>Logout Option in Menu</b></td>
+    <td><img src="screenshots/logout_success.png" width="300"/><br/><b>Returned to Login Screen</b></td>
   </tr>
 </table>
 
