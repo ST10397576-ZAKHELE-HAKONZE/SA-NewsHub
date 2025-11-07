@@ -24,6 +24,60 @@ This release represents the complete implementation of SA NewsHub Part 3 require
 - Part 2: Basic email/password authentication with custom backend only
 - Part 3: Full Firebase Authentication integration with Google SSO
 
+
+**Features Implemented:**
+-  Firebase email/password authentication
+-  Google Single Sign-On (OAuth 2.0)
+-  Secure token management
+-  Automatic session persistence
+-  Password reset functionality (backend)
+-  Secure logout with complete session cleanup
+
+**Logout Feature Implementation:**
+
+**Why Added:**
+Firebase Authentication automatically persists user sessions for convenience, but users need the ability to:
+- Sign out on shared devices for security
+- Switch between multiple accounts
+- End their session for privacy
+- Demonstrate the complete authentication flow
+
+**Technical Implementation:**
+```kotlin
+// logout() function in HomeActivity.kt
+private fun logout() {
+    // Sign out from Firebase
+    FirebaseAuth.getInstance().signOut()
+    
+    // Sign out from Google SSO
+    googleSignInClient.signOut()
+    
+    // Clear app preferences
+    getSharedPreferences("AppSettings", MODE_PRIVATE).edit().clear().apply()
+    
+    // Return to Login screen
+    val intent = Intent(this, LoginActivity::class.java)
+    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    startActivity(intent)
+    finish()
+}
+```
+
+**User Experience:**
+- Access via overflow menu (three dots) in toolbar
+- Instant logout with no confirmation delay
+- Clean navigation back to login screen
+- Cannot use back button to return to authenticated screens
+
+**Screenshots:**
+
+<table>
+  <tr>
+    <td><img src="screenshots/logout_menu.png" width="300"/><br/><b>Logout Option in Menu</b></td>
+    <td><img src="screenshots/logout_success.png" width="300"/><br/><b>Returned to Login Screen</b></td>
+  </tr>
+</table>
+
 **Features Implemented:**
 -  Firebase email/password authentication
 -  Google Single Sign-On (OAuth 2.0)

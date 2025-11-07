@@ -22,6 +22,7 @@ SA NewsHub is a comprehensive Android news application tailored for South Africa
   - Email/Password registration and login with BCrypt encryption
   - Google Single Sign-On (SSO) integration
   - Firebase Authentication backend
+  - Secure logout with session clearing
 
 - ** Multi-Language Support**
   - English
@@ -50,6 +51,76 @@ SA NewsHub is a comprehensive Android news application tailored for South Africa
   - Local caching with Room Database
   - Automatic background sync
   - Works without internet connection
+
+---
+
+## 🔐 Authentication & Security
+
+### **User Authentication Flow**
+
+SA NewsHub implements a comprehensive authentication system with multiple sign-in options and secure session management.
+
+#### **Registration & Login Options:**
+1. **Email/Password Authentication**
+   - Passwords encrypted with BCrypt on server-side
+   - Firebase Authentication for session management
+   - Minimum 6-character password requirement
+
+2. **Google Single Sign-On (SSO)**
+   - One-tap Google account integration
+   - OAuth 2.0 secure token exchange
+   - Automatic profile data retrieval
+
+#### **Session Management:**
+- Firebase automatically persists user sessions
+- Users remain logged in across app restarts
+- Secure token-based authentication
+- Automatic token refresh
+
+#### **Logout Functionality:**
+
+**Why Logout is Important:**
+
+While Firebase Authentication provides automatic session persistence for user convenience, a logout feature is essential for:
+
+1. **Security:** Allows users to sign out on shared devices
+2. **Account Switching:** Enables users to switch between multiple accounts
+3. **Privacy:** Users can end their session when needed
+4. **Testing & Demonstration:** Facilitates showcasing the complete authentication flow
+
+**Logout Implementation:**
+
+The logout feature performs the following actions:
+```kotlin
+private fun logout() {
+    // 1. Sign out from Firebase Authentication
+    FirebaseAuth.getInstance().signOut()
+    
+    // 2. Sign out from Google (clears SSO session)
+    googleSignInClient.signOut()
+    
+    // 3. Clear local app settings (optional)
+    getSharedPreferences("AppSettings", MODE_PRIVATE).edit().clear().apply()
+    
+    // 4. Navigate to Login screen and clear back stack
+    val intent = Intent(this, LoginActivity::class.java)
+    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    startActivity(intent)
+    finish()
+}
+```
+
+**Access Logout:**
+- Open the app
+- Tap the **three-dot menu** (⋮) in the top-right corner
+- Select **"Logout"**
+- User is signed out and returned to Login screen
+
+**Security Benefits:**
+- ✅ Clears Firebase authentication token
+- ✅ Removes Google SSO credentials
+- ✅ Prevents unauthorized access after logout
+- ✅ Clears back navigation stack (can't press back to return)
 
 ---
 
@@ -350,6 +421,7 @@ CI/CD pipeline runs on every push:
   - [x] BCrypt password encryption on server
   - [x] Google Single Sign-On (SSO)
   - [x] Firebase Authentication integration
+  - [x] Secure logout functionality
 
 - [x] **Multi-Language Support**
   - [x] 3 languages implemented (English, Afrikaans, isiZulu)
